@@ -1,0 +1,3 @@
+import { ArrowUp } from 'lucide-react'
+import { Logo, navLinks } from './Header'
+export default function Footer(){return <footer className="footer"><div className="footer-main"><div><Logo/><p>Doğal dokular. Zamansız yaşam alanları.</p></div><nav aria-label="Alt menü">{navLinks.slice(1).map(([label,href])=><a key={href} href={href}>{label}</a>)}</nav><a className="back-to-top" href="#anasayfa" aria-label="Sayfanın başına dön"><ArrowUp size={20}/></a></div><div className="footer-bottom"><span>İnegöl Mobilya · Demo sitesi</span><span>Bu site eğitim amaçlıdır. Gerçek satış veya sipariş alınmaz.</span></div></footer>}

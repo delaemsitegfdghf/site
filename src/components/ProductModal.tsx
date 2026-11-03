@@ -1,0 +1,9 @@
+import { useEffect, useRef } from 'react'
+import { X, ArrowUpRight } from 'lucide-react'
+import { categoryName, imagePath, price } from '../data/products'
+import type { Product } from '../data/products'
+export default function ProductModal({product,onClose}:{product:Product|null;onClose:()=>void}) {
+  const ref=useRef<HTMLDialogElement>(null)
+  useEffect(()=>{const dialog=ref.current;if(!product||!dialog)return; const previous=document.activeElement as HTMLElement|null; const overflow=document.body.style.overflow;dialog.showModal();document.body.style.overflow='hidden'; return()=>{dialog.close();document.body.style.overflow=overflow;previous?.focus()}},[product])
+  return <dialog ref={ref} className="product-modal" aria-labelledby="modal-title" onCancel={e=>{e.preventDefault();onClose()}} onClick={e=>{if(e.target===e.currentTarget){const r=e.currentTarget.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)onClose()}}}>{product&&<><button className="modal-close" onClick={onClose} aria-label="Detayları kapat" autoFocus><X size={22}/></button><div className="modal-layout"><img src={imagePath(product.image)} alt={`${product.name} için temsili görsel`} width="700" height="700"/><div className="modal-copy"><p className="eyebrow">{categoryName(product.category)}</p><h2 id="modal-title">{product.name}</h2><p className="modal-price">{price(product.price)}</p><p>{product.description}</p><div className="material"><span>TASARIM NOTU</span><p>{product.material}</p></div><p className="demo-note">Demo tasarımdır. Ürünler ve fiyatlar örnek amaçlıdır. Görsel ve malzeme açıklamaları temsilidir; satış yapılmamaktadır.</p><button className="text-button" onClick={onClose}>Koleksiyonu Keşfetmeye Devam Et <ArrowUpRight size={18}/></button></div></div></>}</dialog>
+}
